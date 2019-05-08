@@ -1,0 +1,22 @@
+##
+# Builds, tests & package all samples.
+##
+
+steps:
+##
+# Build
+##
+- task: DotNetCoreCLI@2
+  displayName: 'Build Samples'
+  inputs:
+    projects: '$(SamplesRootFolder)/**/*.sln'
+    arguments: '-c $(BuildConfiguration) -v n'
+
+
+- task: DotNetCoreCLI@2
+  displayName: 'Test Samples'
+  inputs:
+    command: test
+    projects: |
+     $(SamplesRootFolder)/tests/OpenQasmReader.Tests
+    arguments: '-c $(BuildConfiguration) -v n'
