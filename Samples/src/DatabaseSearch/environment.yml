@@ -1,6 +1,0 @@
-name: iqsharp-samples
-channels:
-  - quantum-engineering
-dependencies:
-  - notebook
-  - iqsharp
