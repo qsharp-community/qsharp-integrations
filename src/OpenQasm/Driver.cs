@@ -4,7 +4,7 @@
 using Microsoft.Quantum.Simulation.Core;
 using Microsoft.Quantum.Simulation.Simulators;
 using System;
-using Microsoft.Quantum.Samples.Measurement;
+using Microsoft.Quantum.Samples.OpenQasm.Measurement;
 
 namespace Microsoft.Quantum.Samples.OpenQasm
 {
