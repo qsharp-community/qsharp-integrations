@@ -1,6 +1,6 @@
 # Q# Community Integration #
 
-These samples demonstrate how to integrate or use the Q# language in other componets and/or drivers. 
+These samples demonstrate how to integrate with the Q# language infrastructure and/or drivers. 
 Most samples are provided as a Visual Studio 2017 C# or F# project under the [`QsharpIntegrations.sln`](./QsharpIntegrations.sln) solution.
 
 There are multiple types of intgration with the existing Q# landscape.
