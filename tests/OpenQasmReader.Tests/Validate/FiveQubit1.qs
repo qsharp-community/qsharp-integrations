@@ -6,7 +6,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation FiveQubit1 () : Result[] {
         
         mutable _out = new Result[2];
@@ -50,7 +49,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             H(q[0]);
             CNOT(q[0], q[2]);
             CNOT(q[3], q[2]);
-            set _out[0] = M(q[0]);
+            set _out w/= 0 <- M(q[0]);
             CNOT(q[4], q[2]);
             H(q[3]);
             H(q[2]);
@@ -61,7 +60,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             CNOT(q[4], q[2]);
             CNOT(q[3], q[2]);
             CNOT(q[4], q[2]);
-            set _out[1] = M(q[3]);
+            set _out w/= 1 <- M(q[3]);
             H(q[2]);
             H(q[4]);
             CNOT(q[4], q[2]);
@@ -69,9 +68,9 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             H(q[4]);
             CNOT(q[4], q[2]);
             CNOT(q[1], q[2]);
-            set c[0] = M(q[4]);
-            set c[1] = M(q[1]);
-            set c[2] = M(q[2]);
+            set c w/= 0 <- M(q[4]);
+            set c w/= 1 <- M(q[1]);
+            set c w/= 2 <- M(q[2]);
             ResetAll(q);
         }
         

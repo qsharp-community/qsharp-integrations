@@ -326,7 +326,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
             {
                 Indent(builder);
                 var size = qubits.First(q => !q.Contains('['));
-                builder.AppendFormat("for (_idx in 0 .. Length({0})) {{\n", size);
+                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
                 IndentLevel++;
             }
             Indent(builder);
@@ -383,7 +383,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
             {
                 var index = leftQubit.IndexOf('[');
                 var size = index < 0 ? leftQubit : leftQubit.Remove(index);
-                builder.AppendFormat("for (_idx in 0 .. Length({0})) {{\n", size);
+                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
                 IndentLevel++;
                 Indent(builder);
                 builder.AppendFormat("{0}({1}, {2});\n", gate,
@@ -419,14 +419,14 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     for (int i = 0; i < size; i++)
                     {
                         Indent(builder);
-                        builder.AppendFormat("set _out[{0}] = M({1}[{2}]);\n", i, q1, i);
+                        builder.AppendFormat("set _out w/= {0} <- M({1}[{2}]);\n", i, q1, i);
                         qubitMeasured.Add(q1 + $"[{i}]");
                     }
                 }
                 else
                 {
                     Indent(builder);
-                    builder.AppendFormat("set _out[{0}] = M({1});\n", qubitMeasured.Count, q1);
+                    builder.AppendFormat("set _out w/= {0} <- M({1});\n", qubitMeasured.Count, q1);
                     qubitMeasured.Add(q1);
                 }
             }
@@ -443,11 +443,11 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     Indent(builder);
                     var index = q1.IndexOf('[');
                     var size = index < 0 ? q3 : q1.Remove(index);
-                    builder.AppendFormat("for (_idx in 0 .. Length({0})) {{\n", size);
+                    builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
                     IndentLevel++;
                 }
                 Indent(builder);
-                builder.AppendFormat("set {0} = M({1});\n", IndexedCall(q3, loopRequired), IndexedCall(q1, loopRequired));
+                builder.AppendFormat("set {0} <- M({1});\n", IndexedCall(q3, loopRequired, true), IndexedCall(q1, loopRequired));
                 if (loopRequired)
                 {
                     IndentLevel--;
@@ -499,7 +499,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 Indent(builder);
                 var index = q1.IndexOf('[');
                 var size = index < 0 ? q3 : q1.Remove(index);
-                builder.AppendFormat("for (_idx in 0 .. Length({0})) {{\n", size);
+                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
                 IndentLevel++;
             }
             Indent(builder);
@@ -522,9 +522,10 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
         /// <param name="name">Register name</param>
         /// <param name="loopRequired"></param>
         /// <returns></returns>
-        internal static string IndexedCall(string name, bool loopRequired)
+        internal static string IndexedCall(string name, bool loopRequired, bool forAssignment = false)
         {
-            return !loopRequired || name.Contains('[') ? name : string.Format("{0}[_idx]", name);
+            return !loopRequired || name.Contains('[') ? forAssignment ? name.Replace("[", " w/= ").Replace("]","") : name : 
+                forAssignment ? $"{name} w/= _idx" : $"{name}[_idx]";
         }
 
         /// <summary>

@@ -60,8 +60,4 @@
     <ProjectReference Include="..\..\src\OpenQasmReader\OpenQasmReader.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
 </Project>

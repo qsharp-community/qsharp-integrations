@@ -6,7 +6,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation CNot () : Result[] {
         
         mutable c = new Result[2];
@@ -15,8 +14,8 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             H(q[0]);
             CNOT(q[0], q[1]);
             
-            for (_idx in 0 .. Length(c)) {
-                set c[_idx] = M(q[_idx]);
+            for (_idx in 0 .. Length(c) - 1) {
+                set c w/= _idx <- M(q[_idx]);
             }
             
             ResetAll(q);

@@ -14,7 +14,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
         CCNOT(a, b, c);
     }
     
-    
     operation Gates () : Unit {
         
         using (q = Qubit[3]) {

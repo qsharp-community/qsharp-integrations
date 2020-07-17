@@ -6,7 +6,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation Toff6 () : Result[] {
         
         mutable c = new Result[3];
@@ -41,9 +40,9 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             Adjoint T(q[4]);
             CNOT(q[3], q[2]);
             H(q[4]);
-            set c[0] = M(q[2]);
-            set c[1] = M(q[3]);
-            set c[2] = M(q[4]);
+            set c w/= 0 <- M(q[2]);
+            set c w/= 1 <- M(q[3]);
+            set c w/= 2 <- M(q[4]);
             ResetAll(q);
         }
         

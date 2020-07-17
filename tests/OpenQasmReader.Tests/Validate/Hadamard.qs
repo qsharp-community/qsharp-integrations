@@ -6,18 +6,17 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation Hadamard () : Result[] {
         
         mutable c = new Result[1];
         
         using (q = Qubit[1]) {
             H(q[0]);
-            set c[1] = M(q[0]);
+            set c w/= 0 <- M(q[0]);
             ResetAll(q);
         }
         
-        return [c[1]];
+        return [c[0]];
     }
     
 }

@@ -193,7 +193,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests
                 Assert.Equal(new string[] { "c0[0]" }, conventionalMeasured);
 
                 //expected internals
-                Assert.Equal("set c0[0] = M(q[0]);", inside.ToString().Trim()
+                Assert.Equal("set c0 w/= 0 <- M(q[0]);", inside.ToString().Trim()
                         .Replace("\n", string.Empty)
                         .Replace("\r", string.Empty)
                         .Replace("  ", string.Empty));
@@ -233,7 +233,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests
                 Assert.Equal(new string[] { "c0[0]", "c0[1]", "c0[2]" }, conventionalMeasured);
 
                 //expected internals
-                Assert.Equal("set c0[0] = M(q[0]);set c0[1] = M(q[1]);set c0[2] = M(q[2]);", inside.ToString().Trim()
+                Assert.Equal("set c0 w/= 0 <- M(q[0]);set c0 w/= 1 <- M(q[1]);set c0 w/= 2 <- M(q[2]);", inside.ToString().Trim()
                         .Replace("\n", string.Empty)
                         .Replace("\r", string.Empty)
                         .Replace("  ", string.Empty));
@@ -275,7 +275,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests
                 Assert.Equal(new string[] { "q[0]" }, qubitMeasured);
 
                 //expected internals
-                Assert.Equal("set _out[0] = M(q[0]);H(q[1]);", inside.ToString().Trim()
+                Assert.Equal("set _out w/= 0 <- M(q[0]);H(q[1]);", inside.ToString().Trim()
                         .Replace("\n", string.Empty)
                         .Replace("\r", string.Empty)
                         .Replace("  ", string.Empty));
@@ -317,7 +317,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests
                 Assert.Equal(new string[] { "q[0]", "q[1]" }, qubitMeasured);
 
                 //expected internals
-                Assert.Equal("set _out[0] = M(q[0]);set _out[1] = M(q[1]);H(p[1]);", inside.ToString().Trim()
+                Assert.Equal("set _out w/= 0 <- M(q[0]);set _out w/= 1 <- M(q[1]);H(p[1]);", inside.ToString().Trim()
                         .Replace("\n", string.Empty)
                         .Replace("\r", string.Empty)
                         .Replace("  ", string.Empty));
