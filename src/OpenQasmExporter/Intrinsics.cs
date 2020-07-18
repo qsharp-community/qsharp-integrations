@@ -61,39 +61,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmExporter.Circuits
             };
     }
 
-    // public class MResetX : Measurement.MResetX
-    // {
-    //     public MResetX(IOperationFactory m)
-    //         : base(m) { }
-    // }
-    // public class MResetY : Measurement.MResetY
-    // {
-    //     public MResetY(IOperationFactory m)
-    //         : base(m) { }
-    // }
-    //
-    // public class MResetZ : Measurement.MResetZ
-    // {
-    //     public MResetZ(IOperationFactory m)
-    //         : base(m) { }
-    // }
-    //
-    // public class Allocate : Intrinsic.Allocate
-    // {
-    //     public Allocate(IOperationFactory m)
-    //         : base(m) { }
-    //
-    //     public override Qubit Apply()
-    //     {
-    //         return Apply(1)[0]
-    //     }
-    //
-    //     public override IQArray<Qubit> Apply(long count)
-    //     {
-    //         throw new NotImplementedException();
-    //     }
-    // }
-
     public class SingleQubitOp<T> : Intrinsic.I, ICallable
     {
         string ICallable.Name => typeof(T).Name;

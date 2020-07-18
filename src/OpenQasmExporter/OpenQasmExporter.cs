@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.Quantum.Intrinsic;
 using Microsoft.Quantum.Samples.OpenQasmExporter.Circuits;
 using Microsoft.Quantum.Simulation.Common;
@@ -11,32 +12,68 @@ namespace Microsoft.Quantum.Samples.OpenQasmExporter
 {
     public class OpenQasmExporter : SimulatorBase, IDisposable
     {
+        class ConsoleToFileWriter : TextWriter, IDisposable
+        {
+            public override Encoding Encoding => m_PreviousConsoleOutput.Encoding;
+
+            TextWriter m_PreviousConsoleOutput;
+            FileStream m_OutputFile;
+            StreamWriter m_StreamWriter;
+
+            public ConsoleToFileWriter(TextWriter consoleTextWriter, string outputFileName)
+            {
+                m_PreviousConsoleOutput = consoleTextWriter;
+
+                try
+                {
+                    if (!Path.IsPathRooted(outputFileName))
+                    {
+                        // TODO: Figure out how to get output to the same directory that `dotnet run` occurs (e.g. the main project directory)
+                        // Console.WriteLine($"{Directory.GetCurrentDirectory()}");
+                        // outputFileName = $"{Directory.GetCurrentDirectory()}{outputFileName}";
+                    }
+
+                    m_OutputFile = new FileStream(outputFileName, FileMode.OpenOrCreate, FileAccess.Write);
+                    m_StreamWriter = new StreamWriter(m_OutputFile);
+
+                    Console.SetOut(this);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Cannot open {outputFileName} for writing");
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            public override void Write(string message)
+            {
+                m_PreviousConsoleOutput.Write(message);
+                m_StreamWriter.Write(message);
+            }
+
+            public override void WriteLine(string message)
+            {
+                m_PreviousConsoleOutput.WriteLine(message);
+                m_StreamWriter.WriteLine(message);
+            }
+
+            public new void Dispose()
+            {
+                Console.SetOut(m_PreviousConsoleOutput);
+                m_StreamWriter?.Close();
+                m_OutputFile?.Close();
+            }
+        }
+        public override string Name => nameof(OpenQasmExporter);
+
         const int k_MaxQubits = 32;
 
-        string m_OutputFilename = "output.qasm";
-        FileStream m_OutputFile;
-        TextWriter m_PreviousConsoleOutput = Console.Out;
-        StreamWriter m_StreamWriter;
-
+        ConsoleToFileWriter m_ConsoleToFileWriter;
+        
         public OpenQasmExporter(string outputFilename)
-        {
-            m_OutputFilename = outputFilename;
-        }
-
-        public OpenQasmExporter()
             : base(new QubitManagerTrackingScope(k_MaxQubits, true))
         {
-            try
-            {
-                m_OutputFile = new FileStream(m_OutputFilename, FileMode.OpenOrCreate, FileAccess.Write);
-                m_StreamWriter = new StreamWriter(m_OutputFile);
-                Console.SetOut(m_StreamWriter);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Cannot open {m_OutputFilename} for writing");
-                Console.WriteLine(e.Message);
-            }
+            m_ConsoleToFileWriter = new ConsoleToFileWriter(Console.Out, outputFilename);
 
             RegisterPrimitiveOperationsGivenAsCircuits();
 
@@ -46,13 +83,14 @@ namespace Microsoft.Quantum.Samples.OpenQasmExporter
             Console.WriteLine($"creg c[{k_MaxQubits}];");
         }
 
-        public override string Name => nameof(OpenQasmExporter);
+        public OpenQasmExporter()
+            : this("output.qasm")
+        {
+        }
 
         public void Dispose()
         {
-            Console.SetOut(m_PreviousConsoleOutput);
-            m_StreamWriter.Close();
-            m_OutputFile.Close();
+            m_ConsoleToFileWriter.Dispose();
         }
         
         void RegisterPrimitiveOperationsGivenAsCircuits()
