@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.Quantum.Sdk/0.12.20070124">
+
+  <PropertyGroup>
+	<OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <DefaultSimulator>Microsoft.Quantum.Samples.OpenQasmExporter.OpenQasmExporter</DefaultSimulator>
+	  <StartupObject></StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenQasmExporter\OpenQasmExporter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.DotMemoryUnit" Version="3.1.20200127.214830" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="Microsoft.Quantum.Xunit" Version="0.12.20070124" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Bv3.qs">
+      <Link>Test\Bv3.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\CNot.qs">
+      <Link>Test\CNot.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\FiveQubit1.qs">
+      <Link>Test\FiveQubit1.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Gates.qs">
+      <Link>Test\Gates.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Hadamard.qs">
+      <Link>Test\Hadamard.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Hid3.qs">
+      <Link>Test\Hid3.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Marg5.qs">
+      <Link>Test\Marg5.qs</Link>
+    </QsharpCompile>
+    <QsharpCompile Include="..\OpenQasmReader.Tests\Validate\Toff6.qs">
+      <Link>Test\Toff6.qs</Link>
+    </QsharpCompile>
+  </ItemGroup>
+
+</Project>
