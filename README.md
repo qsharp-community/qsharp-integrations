@@ -3,6 +3,8 @@
 These samples demonstrate integration between the Q# language infrastructure/drivers and other languages. 
 Currently present are the following integrations:
 
+![Build](https://github.com/qsharp-community/qsharp-integrations/workflows/Build/badge.svg)
+
 ## 0. Qasm (Quantum Assembler Language) ##
 
 - **[OpenQasmReader](./src/OpenQasmReader)**:
