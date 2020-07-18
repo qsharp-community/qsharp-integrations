@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenQasmExporter.Tests", "t
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenQasmReader.Tests", "tests\OpenQasmReader.Tests\OpenQasmReader.Tests.csproj", "{0F3A4F93-4118-4F21-A8F5-DD5510EE566A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenQasmExporter.Sample", "tests\OpenQasmExporter.Sample\OpenQasmExporter.Sample.csproj", "{B9F971F0-3614-4E27-95F4-11F781FD8B9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0F3A4F93-4118-4F21-A8F5-DD5510EE566A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F3A4F93-4118-4F21-A8F5-DD5510EE566A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F3A4F93-4118-4F21-A8F5-DD5510EE566A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9F971F0-3614-4E27-95F4-11F781FD8B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9F971F0-3614-4E27-95F4-11F781FD8B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9F971F0-3614-4E27-95F4-11F781FD8B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9F971F0-3614-4E27-95F4-11F781FD8B9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
