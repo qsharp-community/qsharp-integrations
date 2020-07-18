@@ -10,7 +10,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests
 {
     public class End2EndTest
     {
-        const string SOURCE_NAMESPACE = "Microsoft.Quantum.Samples.OpenQasmReader.Tests.TestFunctions";
+        const string SOURCE_NAMESPACE = "Microsoft.Quantum.Samples.OpenQasmReader.Tests.Test";
         const string TARGET_NAMESPACE = "Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate";
 
         [Fact]

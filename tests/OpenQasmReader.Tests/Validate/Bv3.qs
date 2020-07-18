@@ -5,7 +5,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation Bv3 () : Result[] {
         
         mutable _out = new Result[4];
@@ -24,10 +23,10 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             H(q[1]);
             H(q[3]);
             H(q[4]);
-            set _out[0] = M(q[0]);
-            set _out[1] = M(q[1]);
-            set _out[2] = M(q[3]);
-            set _out[3] = M(q[4]);
+            set _out w/= 0 <- M(q[0]);
+            set _out w/= 1 <- M(q[1]);
+            set _out w/= 2 <- M(q[3]);
+            set _out w/= 3 <- M(q[4]);
             ResetAll(q);
         }
         

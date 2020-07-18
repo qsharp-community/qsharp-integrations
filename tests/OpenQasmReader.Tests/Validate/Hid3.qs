@@ -6,7 +6,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Math;
     
-    
     operation Hid3 () : Result[] {
         
         mutable c = new Result[4];
@@ -54,10 +53,10 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
             H(q[2]);
             H(q[3]);
             H(q[4]);
-            set c[0] = M(q[1]);
-            set c[1] = M(q[2]);
-            set c[2] = M(q[3]);
-            set c[3] = M(q[4]);
+            set c w/= 0 <- M(q[1]);
+            set c w/= 1 <- M(q[2]);
+            set c w/= 2 <- M(q[3]);
+            set c w/= 3 <- M(q[4]);
             ResetAll(q);
         }
         
