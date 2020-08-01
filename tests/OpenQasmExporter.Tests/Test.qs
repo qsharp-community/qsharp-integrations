@@ -4,7 +4,7 @@ namespace Tests {
     open Microsoft.Quantum.Measurement;
     
     @EntryPoint()
-    @Test("Microsoft.Quantum.Samples.OpenQasmExporter.OpenQasmExporter")
+    @Test("QSharpCommunity.Simulators.OpenQasmExporter.Exporter")
     operation SampleTest() : Unit {
         using (q = Qubit()) { 
             H(q);

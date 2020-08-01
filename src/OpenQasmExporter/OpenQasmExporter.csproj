@@ -3,10 +3,21 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Library</OutputType>
+    <PackageId>QsharpCommunity.Simulators.OpenQasmExporter</PackageId>
+    <Authors />
+    <Company>https://qsharp.community/</Company>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/qsharp-community/qsharp-integrations.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Copyright>Copyright (c) Amir Ebrahimi. All rights reserved. Licensed under the MIT License.</Copyright>
+    <Description>Export Q# functions or operations to OpenQasm</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Quantum.Simulators" Version="0.12.20070124" />
+    <PackageReference Include="Microsoft.Jupyter.Core" Version="1.4.80531" />
+    <PackageReference Include="Microsoft.Quantum.IQSharp.Jupyter" Version="0.12.20072031" />
+    <PackageReference Include="Microsoft.Quantum.Simulators" Version="0.12.20072031" />
   </ItemGroup>
 
 </Project>

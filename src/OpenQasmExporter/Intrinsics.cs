@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Quantum.Simulation.Core;
+using Intrinsic = Microsoft.Quantum.Intrinsic;
 
-namespace Microsoft.Quantum.Samples.OpenQasmExporter.Circuits
+namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
 {
     public class Measure : Intrinsic.Measure
     {
