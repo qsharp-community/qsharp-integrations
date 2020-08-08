@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.Quantum.Intrinsic;
-using Microsoft.Quantum.Samples.OpenQasmExporter.Circuits;
 using Microsoft.Quantum.Simulation.Common;
 using Microsoft.Quantum.Simulation.Core;
+using QSharpCommunity.Simulators.OpenQasmExporter.Circuits;
 
-namespace Microsoft.Quantum.Samples.OpenQasmExporter
+namespace QSharpCommunity.Simulators.OpenQasmExporter
 {
-    public class OpenQasmExporter : SimulatorBase, IDisposable
+    public class Exporter : SimulatorBase, IDisposable
     {
         class ConsoleToFileWriter : TextWriter, IDisposable
         {
@@ -64,16 +64,17 @@ namespace Microsoft.Quantum.Samples.OpenQasmExporter
                 m_OutputFile?.Close();
             }
         }
-        public override string Name => nameof(OpenQasmExporter);
+        public override string Name => nameof(Exporter);
 
+        const string k_DefaultOutputFileName = "output.qasm";
         const int k_MaxQubits = 32;
 
         ConsoleToFileWriter m_ConsoleToFileWriter;
         
-        public OpenQasmExporter(string outputFilename)
+        public Exporter(string outputFileName, TextWriter outputTextWriter)
             : base(new QubitManagerTrackingScope(k_MaxQubits, true))
         {
-            m_ConsoleToFileWriter = new ConsoleToFileWriter(Console.Out, outputFilename);
+            m_ConsoleToFileWriter = new ConsoleToFileWriter(outputTextWriter, outputFileName);
 
             RegisterPrimitiveOperationsGivenAsCircuits();
 
@@ -83,8 +84,18 @@ namespace Microsoft.Quantum.Samples.OpenQasmExporter
             Console.WriteLine($"creg c[{k_MaxQubits}];");
         }
 
-        public OpenQasmExporter()
-            : this("output.qasm")
+        public Exporter(TextWriter outputTextWriter)
+            : this(k_DefaultOutputFileName, outputTextWriter)
+        {
+        }
+
+        public Exporter(string outputFileName)
+            : this(outputFileName, Console.Out)
+        {
+        }
+
+        public Exporter()
+            : this(Console.Out)
         {
         }
 
