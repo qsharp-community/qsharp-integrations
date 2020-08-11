@@ -27,7 +27,10 @@ jobs:
         source-url: https://nuget.pkg.github.com/qsharp-community/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}       
-      
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
     # Runs a set of commands using the runners shell
     - name: .NET pack
       run: dotnet pack -c Release -o ../drop /p:Version="0.1.$Env:GITHUB_RUN_NUMBER"
