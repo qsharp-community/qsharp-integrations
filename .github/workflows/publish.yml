@@ -38,5 +38,5 @@ jobs:
       working-directory: src/OpenQasmExporter
     
     - name: Push to GitHub Packages
-      run: dotnet nuget push (Join-Path "drop" "*.nupkg")
+      run: dotnet nuget push (Join-Path "src" "drop" "*.nupkg")
       shell: pwsh
