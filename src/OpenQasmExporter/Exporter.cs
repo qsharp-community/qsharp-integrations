@@ -6,11 +6,10 @@ using System.Text;
 using Microsoft.Quantum.Intrinsic;
 using Microsoft.Quantum.Simulation.Common;
 using Microsoft.Quantum.Simulation.Core;
-using QSharpCommunity.Simulators.OpenQasmExporter.Circuits;
 
 namespace QSharpCommunity.Simulators.OpenQasmExporter
 {
-    public class Exporter : SimulatorBase, IDisposable
+    public partial class Exporter : SimulatorBase, IDisposable
     {
         class ConsoleToFileWriter : TextWriter, IDisposable
         {
@@ -65,6 +64,8 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
             }
         }
         public override string Name => nameof(Exporter);
+        public string Circuit => writer.ToString();
+        private StringWriter writer = new StringWriter();
 
         const string k_DefaultOutputFileName = "output.qasm";
         const int k_MaxQubits = 32;
@@ -72,11 +73,9 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
         ConsoleToFileWriter m_ConsoleToFileWriter;
         
         public Exporter(string outputFileName, TextWriter outputTextWriter)
-            : base(new QubitManagerTrackingScope(k_MaxQubits, true))
+            : base(new QubitManager(k_MaxQubits, true))
         {
             m_ConsoleToFileWriter = new ConsoleToFileWriter(outputTextWriter, outputFileName);
-
-            RegisterPrimitiveOperationsGivenAsCircuits();
 
             Console.WriteLine("OPENQASM 2.0;");
             Console.WriteLine("include \"qelib1.inc\";");
@@ -103,46 +102,10 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
         {
             m_ConsoleToFileWriter.Dispose();
         }
-        
-        void RegisterPrimitiveOperationsGivenAsCircuits()
+
+        internal void WriteOpenQasm (string line)
         {
-            var primitiveOperationTypes =
-                from op in typeof(X).Assembly.GetExportedTypes()
-                where op.IsSubclassOf(typeof(AbstractCallable))
-                select op;
-
-            var primitiveOperationAsCircuits =
-                from op in typeof(SingleQubitOp<>).Assembly.GetExportedTypes()
-                where op.IsSubclassOf(typeof(AbstractCallable))
-                    && op.Namespace == typeof(SingleQubitOp<>).Namespace
-                select op;
-
-            foreach (var operationType in primitiveOperationTypes)
-            {
-                var matchingCircuitTypes =
-                    from op in primitiveOperationAsCircuits
-                    where op.Name == operationType.Name
-                    select op;
-
-                var numberOfMatchesFound = matchingCircuitTypes.Count();
-                if (numberOfMatchesFound == 0)
-                {
-                    // Use a default
-                    if (typeof(Unitary<Qubit>).IsAssignableFrom(operationType))
-                    {
-                        var genericType = typeof(SingleQubitOp<>).MakeGenericType(operationType);
-                        Register(operationType, genericType, typeof(ICallable));
-                        continue;
-                    }
-                }
-
-                Debug.Assert(
-                    numberOfMatchesFound <= 1,
-                    "There should be at most one matching operation.");
-                
-                if (numberOfMatchesFound == 1)
-                    Register(operationType, matchingCircuitTypes.First(), typeof(ICallable));
-            }
+            writer.WriteLine(line);
         }
     }
 }
