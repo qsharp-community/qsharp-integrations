@@ -52,5 +52,61 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
                     return QVoid.Instance;
                 };
         }
+
+        public class OpenQasmZ : OpenQasm.Z
+        {
+
+            public OpenQasmZ(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                qubit => 
+                { 
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"z q[{qubit.Id}];");
+                    return QVoid.Instance;
+                };
+        }
+
+        public class OpenQasmH : OpenQasm.H
+        {
+
+            public OpenQasmH(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                qubit => 
+                { 
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"h q[{qubit.Id}];");
+                    return QVoid.Instance;
+                };
+        }
+
+        public class OpenQasmS : OpenQasm.S
+        {
+
+            public OpenQasmS(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                qubit => 
+                { 
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"s q[{qubit.Id}];");
+                    return QVoid.Instance;
+                };
+        }        
+        public class OpenQasmT : OpenQasm.T
+        {
+            public OpenQasmT(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                qubit => 
+                { 
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"t q[{qubit.Id}];");
+                    return QVoid.Instance;
+                };
+        }
+
+
     }
 }

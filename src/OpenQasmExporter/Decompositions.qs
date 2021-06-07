@@ -49,4 +49,17 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Decompositions {
         OpenQasm.Z(target);
     }
 
+    operation H(target : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.H(target);
+    }
+
+    operation S(target : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.S(target);
+    }
+
+
+    operation T(target : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.T(target);
+    }    
+
 }

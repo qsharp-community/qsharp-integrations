@@ -17,6 +17,61 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
                 args => this.__Factory__.Get<Decomp.Measure, Decomp.Measure>().__Body__(args);
         }
 
+        public class X : Intrinsic.X
+        {
+            public X(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.X, Decomp.X>().__Body__(args);
+        }
+
+        public class Y : Intrinsic.Y
+        {
+            public Y(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.Y, Decomp.Y>().__Body__(args);
+        }
+
+        public class Z : Intrinsic.Z
+        {
+            public Z(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.Z, Decomp.Z>().__Body__(args);
+        }
+
+        public class H : Intrinsic.H
+        {
+            public H(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.H, Decomp.H>().__Body__(args);
+        }
+
+        public class S : Intrinsic.S
+        {
+            public S(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.S, Decomp.S>().__Body__(args);
+        }
+
+        public class T : Intrinsic.T
+        {
+            public T(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<Qubit, QVoid> __Body__ => 
+                args => this.__Factory__.Get<Decomp.T, Decomp.T>().__Body__(args);
+        }
+
+
         // It's necessary to override this operation, so it doesn't end up in the OpenQASM output
         public class MessageSim : Intrinsic.Message
         {

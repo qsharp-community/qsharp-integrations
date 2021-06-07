@@ -40,14 +40,30 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.OpenQasmIntrinsics {
     }
     // Clifford gate: Hadamard
     // gate h a { u2(0,pi) a; }
+    operation H(target : Qubit) : Unit is Adj + Ctl {
+        body intrinsic;
+    }
     // Clifford gate: sqrt(Z) phase gate
     // gate s a { u1(pi/2) a; }
+    operation S(target : Qubit) : Unit is Adj + Ctl {
+        body intrinsic;
+    }
     // Clifford gate: conjugate of sqrt(Z)
     // gate sdg a { u1(-pi/2) a; }
+    // TODO: figure out how to handle daggers
+    //operation Z(target : Qubit) : Unit is Adj + Ctl {
+    //    body intrinsic;
+    //}
     // C3 gate: sqrt(S) phase gate
     // gate t a { u1(pi/4) a; }
+    operation T(target : Qubit) : Unit is Adj + Ctl {
+        body intrinsic;
+    }
     // C3 gate: conjugate of sqrt(S)
     // gate tdg a { u1(-pi/4) a; }
+    //operation Z(target : Qubit) : Unit is Adj + Ctl {
+    //    body intrinsic;
+    //}
 
 // --- Standard rotations ---
     // Rotation around X-axis
