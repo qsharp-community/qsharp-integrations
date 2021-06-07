@@ -35,31 +35,50 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Decompositions {
         }
     }
 
-    operation X(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.X(target);
+    operation X(qubit : Qubit) : Unit is Adj + Ctl {
+        body (...) {
+            OpenQasm.X(qubit);
+        }
+        adjoint self;
+        controlled (controls, ...) {
+             if (Length(controls) == 0) {
+                OpenQasm.X(qubit);
+            }
+            elif (Length(controls) == 1) {
+                OpenQasm.CNOT(controls[0], qubit);
+            }
+            elif (Length(controls) == 2) {
+                controlled OpenQasm.CNOT(controls[0], controls[1], qubit);
+            }
+            else {
+                ApplyWithLessControlsA(Controlled X, (ctls, qubit));
+            }
+            fail "Not Yet Implemented";
+        }
+        controlled adjoint self;
     }
 
 
-    operation Y(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.Y(target);
+    operation Y(qubit : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.Y(qubit);
     }
 
 
-    operation Z(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.Z(target);
+    operation Z(qubit : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.Z(qubit);
     }
 
-    operation H(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.H(target);
+    operation H(qubit : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.H(qubit);
     }
 
-    operation S(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.S(target);
+    operation S(qubit : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.S(qubit);
     }
 
 
-    operation T(target : Qubit) : Unit is Adj + Ctl {
-        OpenQasm.T(target);
+    operation T(qubit : Qubit) : Unit is Adj + Ctl {
+        OpenQasm.T(qubit);
     }    
 
 }

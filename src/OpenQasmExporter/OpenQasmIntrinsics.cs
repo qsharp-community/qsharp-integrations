@@ -25,6 +25,22 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
                 };
         }
 
+        public class OpenQasmCNOT : OpenQasm.CNOT
+        {
+
+            public OpenQasmCNOT(IOperationFactory m)
+                : base(m) { }
+
+            public override Func<(Qubit, Qubit), QVoid> __Body__ => 
+                args => 
+                { 
+                    var (control, target) = args;
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"cx q[{control.Id}] q[{target.Id}];");
+                    return QVoid.Instance;
+                };
+        }
+
+
         public class OpenQasmX : OpenQasm.X
         {
 

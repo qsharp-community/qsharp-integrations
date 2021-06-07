@@ -20,8 +20,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
         public Exporter(StringWriter writer)
             : base(new QubitManager(k_MaxQubits, true))
         {
-            //m_ConsoleToFileWriter = new ConsoleToFileWriter(outputTextWriter, outputFileName);
-
+            // Todo: defer to end of program
             this.WriteOpenQasmLine("OPENQASM 2.0;");
             this.WriteOpenQasmLine("include \"qelib1.inc\";");
             this.WriteOpenQasmLine($"qreg q[{k_MaxQubits}];");

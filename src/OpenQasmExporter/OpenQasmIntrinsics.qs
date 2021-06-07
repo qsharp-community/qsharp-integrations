@@ -18,6 +18,9 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.OpenQasmIntrinsics {
     // gate u1(lambda) q { U(0,0,lambda) q; }
     // controlled-NOT
     // 10gate cx c,t { CX c,t; }
+    operation CNOT(control : Qubit, target : Qubit) : Unit {
+        body intrinsic;
+    }
     // idle gate (identity)
     // gate id a { U(0,0,0) a; }
 
@@ -25,38 +28,38 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.OpenQasmIntrinsics {
 
     // Pauli gate: bit-flip
     // gate x a { u3(pi,0,pi) a; }
-    operation X(target : Qubit) : Unit is Adj + Ctl {
+    operation X(target : Qubit) : Unit {
         body intrinsic;
     }
     // Pauli gate: bit and phase flip
     // gate y a { u3(pi,pi/2,pi/2) a; }
-    operation Y(target : Qubit) : Unit is Adj + Ctl {
+    operation Y(target : Qubit) : Unit {
         body intrinsic;
     }
     // Pauli gate: phase flip
     // gate z a { u1(pi) a; }
-    operation Z(target : Qubit) : Unit is Adj + Ctl {
+    operation Z(target : Qubit) : Unit {
         body intrinsic;
     }
     // Clifford gate: Hadamard
     // gate h a { u2(0,pi) a; }
-    operation H(target : Qubit) : Unit is Adj + Ctl {
+    operation H(target : Qubit) : Unit {
         body intrinsic;
     }
     // Clifford gate: sqrt(Z) phase gate
     // gate s a { u1(pi/2) a; }
-    operation S(target : Qubit) : Unit is Adj + Ctl {
+    operation S(target : Qubit) : Unit {
         body intrinsic;
     }
     // Clifford gate: conjugate of sqrt(Z)
     // gate sdg a { u1(-pi/2) a; }
     // TODO: figure out how to handle daggers
-    //operation Z(target : Qubit) : Unit is Adj + Ctl {
+    //operation Z(target : Qubit) : Unit {
     //    body intrinsic;
     //}
     // C3 gate: sqrt(S) phase gate
     // gate t a { u1(pi/4) a; }
-    operation T(target : Qubit) : Unit is Adj + Ctl {
+    operation T(target : Qubit) : Unit {
         body intrinsic;
     }
     // C3 gate: conjugate of sqrt(S)
