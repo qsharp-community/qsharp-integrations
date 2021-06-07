@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Quantum.Simulation.Core;
 using Intrinsic = Microsoft.Quantum.Intrinsic;
 using Decomp = QSharpCommunity.Simulators.OpenQasmExporter.Decompositions;
-using OpenQasm = QSharpCommunity.Simulators.OpenQasmExporter.OpenQasmIntrinsics;
 
 namespace QSharpCommunity.Simulators.OpenQasmExporter
 {

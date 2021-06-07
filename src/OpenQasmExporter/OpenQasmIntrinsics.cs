@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Quantum.Simulation.Core;
-using Intrinsic = Microsoft.Quantum.Intrinsic;
-using Decomp = QSharpCommunity.Simulators.OpenQasmExporter.Decompositions;
 using OpenQasm = QSharpCommunity.Simulators.OpenQasmExporter.OpenQasmIntrinsics;
 
 // This file has the OpenQASM intrinsic defintions for the operations found
@@ -22,7 +20,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
                 qubit => 
                 { 
                     //TODO: generalize to qubit reuse?
-                    (this.__Factory__ as Exporter)?.WriteOpenQasm($"measure q[{qubit.Id}] -> c[{qubit.Id}];");
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"measure q[{qubit.Id}] -> c[{qubit.Id}];");
                     return QVoid.Instance;
                 };
         }
@@ -36,7 +34,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
             public override Func<Qubit, QVoid> __Body__ => 
                 qubit => 
                 { 
-                    (this.__Factory__ as Exporter)?.WriteOpenQasm($"x q[{qubit.Id}];");
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"x q[{qubit.Id}];");
                     return QVoid.Instance;
                 };
         }
@@ -50,7 +48,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
             public override Func<Qubit, QVoid> __Body__ => 
                 qubit => 
                 { 
-                    (this.__Factory__ as Exporter)?.WriteOpenQasm($"y q[{qubit.Id}];");
+                    (this.__Factory__ as Exporter)?.WriteOpenQasmLine($"y q[{qubit.Id}];");
                     return QVoid.Instance;
                 };
         }
