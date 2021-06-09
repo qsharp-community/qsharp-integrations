@@ -123,12 +123,15 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                         ParseU1Gate(token, inside);
                         break;
                     case "x":
+                    case "X":
                         ParseOneGate(token, "X", qRegs, inside);
                         break;
                     case "y":
+                    case "Y":
                         ParseOneGate(token, "Y", qRegs, inside);
                         break;
                     case "z":
+                    case "Z":
                         ParseOneGate(token, "Z", qRegs, inside);
                         break;
                     case "H":
@@ -155,7 +158,33 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                         break;
                     case "CX":
                     case "cx":
+                    case "Cx":
                         ParseTwoGate(token, "CNOT", qRegs, inside);
+                        break;
+                    case "CRX":
+                    case "CRx":
+                    case "crx":
+                        ParseTwoParametricGate(token, "Rx", qRegs, inside);
+                        break;
+                    case "CZ":
+                    case "cz":
+                    case "Cz":
+                        ParseTwoGate(token, "CZ", qRegs, inside);
+                        break;
+                    case "CRZ":
+                    case "CRz":
+                    case "crz":
+                        ParseTwoParametricGate(token, "Rz", qRegs, inside);
+                        break;
+                    case "CY":
+                    case "cy":
+                    case "Cy":
+                        ParseTwoGate(token, "CY", qRegs, inside);
+                        break;
+                    case "CRY":
+                    case "CRy":
+                    case "cry":
+                        ParseTwoParametricGate(token, "Ry", qRegs, inside);
                         break;
                     case "ccx":
                         ParseThreeGate(token, "CCNOT", qRegs, inside);
@@ -394,6 +423,22 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 builder.AppendLine("}");
             }
         }
+            
+        private static void ParseTwoParametricGate(IEnumerator<string> token, string gate, Dictionary<string, int> qReg, StringBuilder builder)
+        {
+            token.MoveNext(); // (
+            token.MoveNext();
+            var angle = token.Current;
+            token.MoveNext(); // )
+            token.MoveNext();
+            var leftQubit = token.Current;
+            token.MoveNext(); // ,
+            token.MoveNext();
+            var rightQubit = token.Current;
+            token.MoveNext(); // ;
+            Indent(builder);
+            builder.AppendFormat("Controlled {0}([{1}], ({2}, {3}));\n", gate, leftQubit, angle, rightQubit);
+        }
 
         /// <summary>
         /// Parse a measure gate
@@ -502,7 +547,6 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
                 IndentLevel++;
             }
-            Indent(builder);
             builder.AppendFormat("{0}({1}, {2}, {3});\n", gate,
                 IndexedCall(q1, loopRequired),
                 IndexedCall(q2, loopRequired),
@@ -671,7 +715,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 foreach (var qubitRegister in qRegs)
                 {
                     Indent(outside);
-                    outside.AppendFormat("using ({0} = Qubit[{1}]) {{\n", qubitRegister.Key, qubitRegister.Value);
+                    outside.AppendFormat("use {0} = Qubit[{1}] {{\n", qubitRegister.Key, qubitRegister.Value);
                 }
             }
             outside.Append(inside.ToString());
@@ -847,10 +891,10 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     fileName += token.Current;
                 }
 
-                fileName = Path.Combine(path, fileName);
-                if (File.Exists(fileName))
+                var fullFileName = Path.Combine(path, fileName);
+                if (File.Exists(fullFileName))
                 {
-                    using (var stream = File.OpenText(fileName))
+                    using (var stream = File.OpenText(fullFileName))
                     {
                         ParseApplication(Tokenizer(stream).GetEnumerator(), cRegs, qRegs, path, inside, outside, classicalMeasured, qubitMeasured);
                     }
@@ -859,7 +903,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 //So if the file is not there, just give a warning in the output and continue
                 else
                 {
-                    outside.AppendLine($"//Generated without includes of {fileName} because the file was not found during generation.");
+                    outside.AppendLine($"//The file {fileName} to be included in the QASM was not found. Generated without it.");
                 }
             }
             else
