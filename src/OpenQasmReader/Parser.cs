@@ -189,6 +189,11 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     case "ccx":
                         ParseThreeGate(token, "CCNOT", qRegs, inside);
                         break;
+                    case "CSWAP":
+                    case "CSwap":
+                    case "cswap":
+                        ParseThreeControlledGate(token, "SWAP", qRegs, inside);
+                        break;
                     case "measure":
                         ParseMeasure(token, inside, cRegs, qRegs, classicalMeasured, qubitMeasured);
                         break;
@@ -557,6 +562,21 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 Indent(builder);
                 builder.AppendLine("}");
             }
+        }
+
+        private static void ParseThreeControlledGate(IEnumerator<string> token, string gate, Dictionary<string, int> qReg, StringBuilder builder)
+        {
+            token.MoveNext();
+            var controlQubit = token.Current;
+            token.MoveNext(); // ,
+            token.MoveNext();
+            var targetQubit1 = token.Current;
+            token.MoveNext(); // ,
+            token.MoveNext();
+            var targetQubit2 = token.Current;
+            token.MoveNext(); // ;
+            Indent(builder);
+            builder.AppendFormat("Controlled {0}([{1}], ({2}, {3}));\n", gate, controlQubit, targetQubit1, targetQubit2);
         }
 
         /// <summary>
