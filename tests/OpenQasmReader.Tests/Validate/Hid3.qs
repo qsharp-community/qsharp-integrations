@@ -10,7 +10,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
         
         mutable c = new Result[4];
         
-        using (q = Qubit[5]) {
+        use q = Qubit[5] {
             H(q[1]);
             H(q[2]);
             H(q[3]);

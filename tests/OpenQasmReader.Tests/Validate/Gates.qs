@@ -16,7 +16,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
     
     operation Gates () : Unit {
         
-        using (q = Qubit[3]) {
+        use q = Qubit[3] {
             Majority(q[0], q[1], q[2]);
             ResetAll(q);
         }
