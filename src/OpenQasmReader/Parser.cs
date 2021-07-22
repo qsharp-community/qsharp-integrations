@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -119,6 +119,9 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     case "u":
                     case "u3":
                         ParseUGate(token, inside);
+                        break;
+                    case "u2":
+                        ParseU2Gate(token, inside);
                         break;
                     case "u1":
                         ParseU1Gate(token, inside);
@@ -796,6 +799,39 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
             }
         }
 
+        /// <summary>
+        /// Parse a U2 Gate which is a single qubit rotation
+        /// </summary>
+        /// <param name="token">Current token the tokenizer is on to parse</param>
+        /// <param name="builder"></param>
+        private static void ParseU2Gate(IEnumerator<string> token, StringBuilder builder)
+        {
+            token.MoveNext(); //(
+            token.MoveNext();
+            var phi = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            token.MoveNext();
+            var lambda = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            token.MoveNext();
+            var q = token.Current;
+            token.MoveNext(); // ;
+            if (!phi.Equals(ZERO))
+            {
+                Indent(builder);
+                builder.AppendFormat("Rz({0}, {1});\n", phi, q);
+            }
+            Indent(builder);
+            builder.AppendFormat("Ry(PI() / 2.0, {0});\n", q);
+            if (!lambda.Equals(ZERO))
+            {
+                Indent(builder);
+                builder.AppendFormat("Rz({0}, {1});\n", lambda, q);
+            }
+            if (!phi.Equals(ZERO) || !lambda.Equals(ZERO))
+            {
+                Indent(builder);
+                builder.AppendFormat("R(PauliI, -({0} + {1}), {2});\n", phi, lambda, q);
+            }
+        }
 
         /// <summary>
         /// Parse an U Gate which is a three axis rotation
