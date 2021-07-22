@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
@@ -116,6 +116,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                         ParseClassicalRegister(token, cRegs, inside);
                         break;
                     case "U":
+                    case "u":
                     case "u3":
                         ParseUGate(token, inside);
                         break;
@@ -805,32 +806,38 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
         {
             token.MoveNext(); //(
             token.MoveNext();
-            var x = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            var theta = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
             token.MoveNext();
-            var y = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            var phi = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
             token.MoveNext();
-            var z = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            var lambda = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
             token.MoveNext();
             var q = token.Current;
             token.MoveNext(); // ;
             bool written = false;
-            if (!x.Equals(ZERO))
+            if (!lambda.Equals(ZERO))
             {
                 written = true;
                 Indent(builder);
-                builder.AppendFormat("Rx({0}, {1});\n", x, q);
+                builder.AppendFormat("Rz({0}, {1});\n", lambda, q);
             }
-            if (!y.Equals(ZERO))
+            if (!theta.Equals(ZERO))
             {
                 written = true;
                 Indent(builder);
-                builder.AppendFormat("Ry({0}, {1});\n", y, q);
+                builder.AppendFormat("Ry({0}, {1});\n", theta, q);
             }
-            if (!z.Equals(ZERO))
+            if (!phi.Equals(ZERO))
             {
                 written = true;
                 Indent(builder);
-                builder.AppendFormat("Rz({0}, {1});\n", z, q);
+                builder.AppendFormat("Rz({0}, {1});\n", phi, q);
+            }
+            if (!phi.Equals(ZERO) || !lambda.Equals(ZERO))
+            {
+                written = true;
+                Indent(builder);
+                builder.AppendFormat("R(PauliI, -({0} + {1}), {2});\n", phi, lambda, q);
             }
             if (!written)
             {
