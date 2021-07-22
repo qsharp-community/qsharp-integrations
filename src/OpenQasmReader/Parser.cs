@@ -778,14 +778,14 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
         {
             token.MoveNext(); //(
             token.MoveNext();
-            var x = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
+            var theta = ParseCalculation(token, COMMA, CLOSE_PARENTHESES);
             token.MoveNext();
             var q = token.Current;
             token.MoveNext(); // ;
-            if (!x.Equals(ZERO))
+            if (!theta.Equals(ZERO))
             {
                 Indent(builder);
-                builder.AppendFormat("Rx({0},{1});\n", x, q);
+                builder.AppendFormat("R1({0}, {1});\n", theta, q);
             }
             else
             {
