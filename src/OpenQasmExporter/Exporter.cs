@@ -72,7 +72,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter
         ConsoleToFileWriter m_ConsoleToFileWriter;
         
         public Exporter(string outputFileName, TextWriter outputTextWriter)
-            : base(new QubitManagerTrackingScope(k_MaxQubits, true))
+            : base(new QubitManager(k_MaxQubits, true))
         {
             m_ConsoleToFileWriter = new ConsoleToFileWriter(outputTextWriter, outputFileName);
 

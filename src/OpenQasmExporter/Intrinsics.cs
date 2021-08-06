@@ -10,7 +10,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
         public Measure(IOperationFactory m)
             : base(m) { }
 
-        public override Func<(IQArray<Pauli>, IQArray<Qubit>), Result> Body => 
+        public override Func<(IQArray<Pauli>, IQArray<Qubit>), Result> __Body__ => 
             args =>
             {
                 var (bases, qubits) = args;
@@ -28,7 +28,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
         public Message(IOperationFactory m)
             : base(m) { }
 
-        public override Func<string, QVoid> Body =>
+        public override Func<string, QVoid> __Body__ =>
             msg =>
             {
                 // Ignore
@@ -42,7 +42,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
         public Reset(IOperationFactory m)
             : base(m) { }
 
-        public override Func<Qubit, QVoid> Body =>
+        public override Func<Qubit, QVoid> __Body__ =>
             qubit =>
             {
                 return QVoid.Instance;
@@ -55,7 +55,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
         public ResetAll(IOperationFactory m)
             : base(m) { }
 
-        public override Func<IQArray<Qubit>, QVoid> Body =>
+        public override Func<IQArray<Qubit>, QVoid> __Body__ =>
             args =>
             {
                 return QVoid.Instance;
@@ -66,7 +66,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
     {
         string ICallable.Name => typeof(T).Name;
 
-        public override Func<Qubit, QVoid> Body =>
+        public override Func<Qubit, QVoid> __Body__ =>
             qubit =>
             {
                 var opName = ((ICallable)this).Name.ToLower();
@@ -74,7 +74,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
                 return QVoid.Instance;
             };
 
-        public override Func<(IQArray<Qubit>, Qubit), QVoid> ControlledBody =>
+        public override Func<(IQArray<Qubit>, Qubit), QVoid> __ControlledBody__ =>
             args =>
             {
                 var (controls, qubit) = args;
@@ -85,7 +85,7 @@ namespace QSharpCommunity.Simulators.OpenQasmExporter.Circuits
                 return QVoid.Instance;
             };
 
-        public override Func<Qubit, QVoid> AdjointBody =>
+        public override Func<Qubit, QVoid> __AdjointBody__ =>
             qubit =>
             {
                 var opName = ((ICallable)this).Name;
