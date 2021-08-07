@@ -326,7 +326,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
             {
                 Indent(builder);
                 var size = qubits.First(q => !q.Contains('['));
-                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
+                builder.AppendFormat("for _idx in 0 .. Length({0}) - 1 {{\n", size);
                 IndentLevel++;
             }
             Indent(builder);
@@ -383,7 +383,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
             {
                 var index = leftQubit.IndexOf('[');
                 var size = index < 0 ? leftQubit : leftQubit.Remove(index);
-                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
+                builder.AppendFormat("for _idx in 0 .. Length({0}) - 1 {{\n", size);
                 IndentLevel++;
                 Indent(builder);
                 builder.AppendFormat("{0}({1}, {2});\n", gate,
@@ -443,7 +443,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                     Indent(builder);
                     var index = q1.IndexOf('[');
                     var size = index < 0 ? q3 : q1.Remove(index);
-                    builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
+                    builder.AppendFormat("for _idx in 0 .. Length({0}) - 1 {{\n", size);
                     IndentLevel++;
                 }
                 Indent(builder);
@@ -499,7 +499,7 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 Indent(builder);
                 var index = q1.IndexOf('[');
                 var size = index < 0 ? q3 : q1.Remove(index);
-                builder.AppendFormat("for (_idx in 0 .. Length({0}) - 1) {{\n", size);
+                builder.AppendFormat("for _idx in 0 .. Length({0}) - 1 {{\n", size);
                 IndentLevel++;
             }
             Indent(builder);
@@ -671,23 +671,16 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader
                 foreach (var qubitRegister in qRegs)
                 {
                     Indent(outside);
-                    outside.AppendFormat("using ({0} = Qubit[{1}]) {{\n", qubitRegister.Key, qubitRegister.Value);
+                    outside.AppendFormat("use {0} = Qubit[{1}];\n", qubitRegister.Key, qubitRegister.Value);
                 }
             }
             outside.Append(inside.ToString());
             if (qRegs.Any())
             {
-                IndentLevel++;
                 foreach (var qubitRegister in qRegs)
                 {
                     Indent(outside);
                     outside.AppendFormat("ResetAll({0});\n", qubitRegister.Key);
-                }
-                IndentLevel--;
-                foreach (var qubitRegister in qRegs)
-                {
-                    Indent(outside);
-                    outside.AppendLine(CLOSE_CURLYBRACKET);
                 }
             }
             if (classicalMeasured.Any() || qubitMeasured.Any())
