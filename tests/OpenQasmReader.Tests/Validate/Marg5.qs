@@ -10,37 +10,36 @@ namespace Microsoft.Quantum.Samples.OpenQasmReader.Tests.Validate {
         
         mutable c = new Result[3];
         
-        using (q = Qubit[5]) {
-            X(q[2]);
-            X(q[4]);
-            S(q[2]);
-            H(q[2]);
-            T(q[2]);
-            H(q[2]);
-            Adjoint S(q[2]);
-            CNOT(q[3], q[2]);
-            S(q[2]);
-            H(q[2]);
-            T(q[2]);
-            H(q[2]);
-            Adjoint S(q[2]);
-            CNOT(q[4], q[2]);
-            S(q[2]);
-            H(q[2]);
-            Adjoint T(q[2]);
-            H(q[2]);
-            Adjoint S(q[2]);
-            CNOT(q[3], q[2]);
-            S(q[2]);
-            H(q[2]);
-            Adjoint T(q[2]);
-            H(q[2]);
-            Adjoint S(q[2]);
-            set c w/= 0 <- M(q[2]);
-            set c w/= 1 <- M(q[3]);
-            set c w/= 2 <- M(q[4]);
-            ResetAll(q);
-        }
+        use q = Qubit[5];
+        X(q[2]);
+        X(q[4]);
+        S(q[2]);
+        H(q[2]);
+        T(q[2]);
+        H(q[2]);
+        Adjoint S(q[2]);
+        CNOT(q[3], q[2]);
+        S(q[2]);
+        H(q[2]);
+        T(q[2]);
+        H(q[2]);
+        Adjoint S(q[2]);
+        CNOT(q[4], q[2]);
+        S(q[2]);
+        H(q[2]);
+        Adjoint T(q[2]);
+        H(q[2]);
+        Adjoint S(q[2]);
+        CNOT(q[3], q[2]);
+        S(q[2]);
+        H(q[2]);
+        Adjoint T(q[2]);
+        H(q[2]);
+        Adjoint S(q[2]);
+        set c w/= 0 <- M(q[2]);
+        set c w/= 1 <- M(q[3]);
+        set c w/= 2 <- M(q[4]);
+        ResetAll(q);
         
         return [c[0], c[1], c[2]];
     }
